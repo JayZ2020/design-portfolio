@@ -1,0 +1,57 @@
+```mermaid
+graph TD
+    subgraph Users
+        A[Customer Devices]
+    end
+
+    A --> B[Load Balancer]
+
+    subgraph Application Layer
+        B --> C1[Stateless App Server 1]
+        B --> C2[Stateless App Server 2]
+    end
+
+    subgraph Data Layer
+        C1 --> D1[(Managed Database - Multi-AZ)]
+        C2 --> D1
+        C1 --> D2[Cache (Redis/ElastiCache)]
+        C2 --> D2
+    end
+
+    subgraph Storage Layer
+        D1 --> E[Secure Storage (S3/Blob Storage)]
+    end
+
+    subgraph Monitoring & Logging
+        C1 --> F[Monitoring (CloudWatch/Azure Monitor)]
+        C2 --> F
+        D1 --> F
+    end
+
+---
+
+### **How to Use This Diagram**
+- Save the above diagram in your `SYSTEM_DESIGN.md` file or any Markdown-supported documentation.
+- GitHub supports rendering **Mermaid** diagrams natively. When you push the `.md` file to GitHub, the diagram will automatically render.
+
+---
+
+### **What This Diagram Represents**
+1. **Users**: Represents customer devices interacting with the system.
+2. **Load Balancer**: Distributes incoming traffic to multiple stateless application servers.
+3. **Application Layer**: Stateless servers handle requests and interact with the data layer.
+4. **Data Layer**:
+   - **Managed Database**: Stores transactional data securely with multi-AZ failover.
+   - **Cache**: Frequently accessed data is retrieved from the caching layer to reduce latency.
+5. **Storage Layer**: Logs, backups, and static files are stored in a secure, centralized storage solution.
+6. **Monitoring & Logging**: Tracks metrics, logs, and system health across all layers.
+
+---
+
+### **Optional Enhancements**
+If you want a more detailed or visually rich version, you can:
+- Export a diagram from tools like **Lucidchart**, **Draw.io**, or **Visio** and save it as a PNG/SVG in the `diagrams/` folder.
+- Reference the exported diagram in your documentation like this:
+
+```markdown
+![Architecture Diagram](diagrams/architecture_diagram.png)
